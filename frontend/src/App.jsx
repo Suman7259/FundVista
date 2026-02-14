@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import MutualFundsList from './components/MutualFundsList'
 import SIPCalculator from './components/SIPCalculator'
+import LearnMutualFunds from './components/LearnMutualFunds'
 
 function App() {
   const [activeTab, setActiveTab] = useState('funds')
@@ -19,7 +20,7 @@ function App() {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex gap-4 mb-8 justify-center">
+        <div className="flex gap-4 mb-8 justify-center flex-wrap">
           <button
             onClick={() => setActiveTab('funds')}
             className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
@@ -40,12 +41,23 @@ function App() {
           >
             🧮 SIP Calculator
           </button>
+          <button
+            onClick={() => setActiveTab('learn')}
+            className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
+              activeTab === 'learn'
+                ? 'bg-white text-indigo-600 shadow-xl scale-105'
+                : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
+            }`}
+          >
+            🎓 Learn
+          </button>
         </div>
 
         {/* Content Section */}
         <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-10">
           {activeTab === 'funds' && <MutualFundsList />}
           {activeTab === 'calculator' && <SIPCalculator />}
+          {activeTab === 'learn' && <LearnMutualFunds />}
         </div>
       </div>
     </div>
