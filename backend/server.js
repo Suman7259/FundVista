@@ -109,7 +109,7 @@ const fundDatabase = [
     returns_3yr: 17.2,
     returns_5yr: 16.5,
     minInvestment: 5000,
-    riskLevel: "Moderate",
+    riskLevel: "Moderately High",
     fundHouse: "PPFAS Mutual Fund",
     fundManager: "Rajeev Thakkar",
     fundSize: "₹68,500 Cr"
@@ -123,7 +123,7 @@ const fundDatabase = [
     returns_3yr: 16.8,
     returns_5yr: 15.9,
     minInvestment: 5000,
-    riskLevel: "Moderate",
+    riskLevel: "Moderately High",
     fundHouse: "HDFC Mutual Fund",
     fundManager: "Roshi Jain",
     fundSize: "₹42,300 Cr"
@@ -139,7 +139,7 @@ const fundDatabase = [
     returns_3yr: 19.5,
     returns_5yr: 17.8,
     minInvestment: 5000,
-    riskLevel: "Moderately High",
+    riskLevel: "High",
     fundHouse: "Axis Mutual Fund",
     fundManager: "Shreyash Devalkar",
     fundSize: "₹18,920 Cr"
@@ -153,7 +153,7 @@ const fundDatabase = [
     returns_3yr: 20.2,
     returns_5yr: 18.3,
     minInvestment: 5000,
-    riskLevel: "Moderately High",
+    riskLevel: "High",
     fundHouse: "Kotak Mahindra Mutual Fund",
     fundManager: "Pankaj Tibrewal",
     fundSize: "₹24,650 Cr"
@@ -169,7 +169,7 @@ const fundDatabase = [
     returns_3yr: 23.8,
     returns_5yr: 21.2,
     minInvestment: 5000,
-    riskLevel: "High",
+    riskLevel: "Very High",
     fundHouse: "SBI Mutual Fund",
     fundManager: "R. Srinivasan",
     fundSize: "₹32,180 Cr"
@@ -183,10 +183,68 @@ const fundDatabase = [
     returns_3yr: 24.5,
     returns_5yr: 22.1,
     minInvestment: 5000,
-    riskLevel: "High",
+    riskLevel: "Very High",
     fundHouse: "Nippon India Mutual Fund",
     fundManager: "Samir Rachh",
     fundSize: "₹28,940 Cr"
+  },
+  
+  // Gold Funds
+  {
+    schemeCode: 119226,  // Real scheme code for SBI Gold Fund
+    name: "SBI Gold Fund - Direct Plan - Growth",
+    category: "Gold Fund",
+    expenseRatio: 0.65,
+    returns_1yr: 14.8,
+    returns_3yr: 12.5,
+    returns_5yr: 11.2,
+    minInvestment: 500,
+    riskLevel: "Moderate",
+    fundHouse: "SBI Mutual Fund",
+    fundManager: "Raviprakash Sharma",  // Real fund manager from search
+    fundSize: "₹1,500 Cr"
+  },
+  {
+    schemeCode: 119596,  // Real scheme code for HDFC Gold Fund
+    name: "HDFC Gold Fund - Direct Plan - Growth",
+    category: "Gold Fund",
+    expenseRatio: 0.50,
+    returns_1yr: 14.5,
+    returns_3yr: 12.3,
+    returns_5yr: 11.0,
+    minInvestment: 100,
+    riskLevel: "Moderate",
+    fundHouse: "HDFC Mutual Fund",
+    fundManager: "Arun Agarwal",  // Real fund manager from search
+    fundSize: "₹1,140 Cr"
+  },
+  {
+    schemeCode: 119227,  // ICICI Prudential Gold ETF FOF scheme code
+    name: "ICICI Prudential Gold ETF FOF - Direct Plan - Growth",
+    category: "Gold Fund",
+    expenseRatio: 0.59,
+    returns_1yr: 14.6,
+    returns_3yr: 12.4,
+    returns_5yr: 11.1,
+    minInvestment: 100,
+    riskLevel: "Moderate",
+    fundHouse: "ICICI Prudential Mutual Fund",
+    fundManager: "Manish Banthia",  // Real fund manager from search
+    fundSize: "₹1,325 Cr"
+  },
+  {
+    schemeCode: 143546,
+    name: "Nippon India Gold Savings Fund - Direct Plan - Growth",
+    category: "Gold Fund",
+    expenseRatio: 0.62,
+    returns_1yr: 14.7,
+    returns_3yr: 12.6,
+    returns_5yr: 11.3,
+    minInvestment: 1000,
+    riskLevel: "Moderate",
+    fundHouse: "Nippon India Mutual Fund",
+    fundManager: "Mehul Dama",
+    fundSize: "₹2,480 Cr"
   }
 ];
 
