@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import FundDetailModal from './FundDetailModal'
 
 const MutualFundsList = () => {
   const [funds, setFunds] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState('All')
+  const [selectedFund, setSelectedFund] = useState(null)
 
   useEffect(() => {
     fetchMutualFunds()
@@ -74,10 +76,13 @@ const MutualFundsList = () => {
         {filteredFunds.map(fund => (
           <div 
             key={fund.id} 
+            onClick={() => setSelectedFund(fund)}
             className="border-2 border-gray-200 rounded-xl p-6 hover:border-indigo-500 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-white"
           >
             {/* Fund Name */}
-            <h3 className="text-xl font-bold text-gray-800 mb-3">{fund.name}</h3>
+            <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-indigo-600 transition-colors">
+              {fund.name}
+            </h3>
             
             {/* Category Badge */}
             <span className="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm px-4 py-1 rounded-full mb-4">
@@ -108,14 +113,6 @@ const MutualFundsList = () => {
                 <div className="text-xs text-gray-500 mb-1">Expense Ratio</div>
                 <div className="text-lg font-bold text-gray-800">{fund.expenseRatio}%</div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Fund Manager</div>
-                <div className="text-lg font-bold text-gray-800">{fund.fundManager}</div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Fund Size</div>
-                <div className="text-lg font-bold text-gray-800">{fund.fundSize}</div>
-              </div>
             </div>
 
             {/* Min Investment */}
@@ -128,6 +125,11 @@ const MutualFundsList = () => {
             <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 text-center py-2 rounded-lg font-semibold">
               Risk Level: {fund.riskLevel}
             </div>
+
+            {/* Click to view details hint */}
+            <div className="mt-3 text-center text-sm text-indigo-600 font-semibold">
+              Click to view details →
+            </div>
           </div>
         ))}
       </div>
@@ -137,6 +139,14 @@ const MutualFundsList = () => {
         <div className="text-center py-20">
           <p className="text-gray-500 text-lg">No mutual funds found for the selected category.</p>
         </div>
+      )}
+
+      {/* Fund Detail Modal */}
+      {selectedFund && (
+        <FundDetailModal 
+          fund={selectedFund} 
+          onClose={() => setSelectedFund(null)} 
+        />
       )}
     </div>
   )

@@ -365,6 +365,31 @@ app.post('/api/calculate-sip', (req, res) => {
   });
 });
 
+// Get historical NAV data for a specific fund
+app.get('/api/mutual-funds/:id/history', async (req, res) => {
+  try {
+    const schemeCode = req.params.id;
+    const response = await axios.get(`https://api.mfapi.in/mf/${schemeCode}`, {
+      timeout: 10000
+    });
+    
+    if (response.data && response.data.data) {
+      // Get last 1 year of data (approximately 250 trading days)
+      const historicalData = response.data.data.slice(0, 365).reverse();
+      
+      res.json({
+        scheme_name: response.data.meta.scheme_name,
+        scheme_code: response.data.meta.scheme_code,
+        fund_house: response.data.meta.fund_house,
+        data: historicalData
+      });
+    } else {
+      res.status(404).json({ message: 'Historical data not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching historical data', error: error.message });
+  }
+});
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
