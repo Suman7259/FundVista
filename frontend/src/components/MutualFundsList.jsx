@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import FundDetailModal from './FundDetailModal'
+import Collections from './Collections'
 
 const MutualFundsList = () => {
   const [funds, setFunds] = useState([])
@@ -8,6 +9,7 @@ const MutualFundsList = () => {
   const [error, setError] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState('All')
   const [selectedFund, setSelectedFund] = useState(null)
+  const [showCollections, setShowCollections] = useState(true)
 
   useEffect(() => {
     fetchMutualFunds()
@@ -23,6 +25,13 @@ const MutualFundsList = () => {
       setError('Failed to fetch mutual funds. Please ensure the backend server is running.')
       setLoading(false)
     }
+  }
+
+  const handleCategorySelect = (category) => {
+    setCategoryFilter(category)
+    setShowCollections(false)
+    // Scroll to funds list
+    window.scrollTo({ top: 300, behavior: 'smooth' })
   }
 
   const categories = ['All', ...new Set(funds.map(fund => fund.category))]
@@ -54,14 +63,47 @@ const MutualFundsList = () => {
 
   return (
     <div>
+      {/* Collections Section */}
+      {showCollections && (
+        <div className="mb-12">
+          <Collections onCategorySelect={handleCategorySelect} />
+        </div>
+      )}
+
+      {/* Back to Collections Button */}
+      {!showCollections && (
+        <button
+          onClick={() => {
+            setShowCollections(true)
+            setCategoryFilter('All')
+          }}
+          className="mb-6 flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-semibold transition-colors"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to Collections
+        </button>
+      )}
+
       {/* Header with Filter */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <h2 className="text-3xl font-bold text-gray-800">Available Mutual Funds</h2>
+        <div>
+          <h2 className="text-3xl font-bold text-gray-800">
+            {categoryFilter === 'All' ? 'All Mutual Funds' : `${categoryFilter} Funds`}
+          </h2>
+          <p className="text-gray-600 mt-1">{filteredFunds.length} funds available</p>
+        </div>
         <div className="flex items-center gap-3">
           <label className="text-sm font-semibold text-gray-600">Filter by Category:</label>
           <select 
             value={categoryFilter} 
-            onChange={(e) => setCategoryFilter(e.target.value)}
+            onChange={(e) => {
+              setCategoryFilter(e.target.value)
+              if (e.target.value !== 'All') {
+                setShowCollections(false)
+              }
+            }}
             className="px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 bg-white cursor-pointer transition-colors"
           >
             {categories.map(category => (
