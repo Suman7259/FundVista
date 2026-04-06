@@ -251,28 +251,28 @@ const fundDatabase = [
     name: "Parag Parikh Flexi Cap Fund - Direct Plan - Growth",
     category: "Flexi Cap",
     expenseRatio: 0.64,
-    returns_1yr: 15.8,
-    returns_3yr: 20.5,
-    returns_5yr: 21.2,
+    returns_1yr: 1.8,
+    returns_3yr: 17.66,
+    returns_5yr: 16.32,
     minInvestment: 1000,
     riskLevel: "Moderately High",
     fundHouse: "PPFAS Mutual Fund",
     fundManager: "Rajeev Thakkar",
-    fundSize: "₹78,500 Cr"
+    fundSize: "₹1,33,500 Cr"
   },
   {
     schemeCode: 119605,  // ✅ VERIFIED
     name: "HDFC Flexi Cap Fund - Direct Plan - Growth",
     category: "Flexi Cap",
     expenseRatio: 0.69,
-    returns_1yr: 18.29,
-    returns_3yr: 23.62,
-    returns_5yr: 21.55,
+    returns_1yr: 1.29,
+    returns_3yr: 18.62,
+    returns_5yr: 18.55,
     minInvestment: 1000,
     riskLevel: "Moderately High",
     fundHouse: "HDFC Mutual Fund",
     fundManager: "Roshi Jain",
-    fundSize: "₹97,451 Cr"
+    fundSize: "₹1,00,451 Cr"
   },
   {
     schemeCode: 145465,  // ✅ CORRECTED - Motilal Flexi Cap
@@ -293,28 +293,28 @@ const fundDatabase = [
     name: "UTI Flexi Cap Fund - Direct Plan - Growth",
     category: "Flexi Cap",
     expenseRatio: 0.82,
-    returns_1yr: 13.8,
-    returns_3yr: 18.4,
-    returns_5yr: 18.9,
+    returns_1yr: -7.8,
+    returns_3yr: 8.4,
+    returns_5yr: 5.9,
     minInvestment: 5000,
     riskLevel: "Moderately High",
     fundHouse: "UTI Mutual Fund",
     fundManager: "Swati Kulkarni",
-    fundSize: "₹32,920 Cr"
+    fundSize: "₹22,920 Cr"
   },
   {
     schemeCode: 119179,  // ✅ CORRECTED - JM Flexi Cap
     name: "JM Flexi Cap Fund - Direct Plan - Growth",
     category: "Flexi Cap",
-    expenseRatio: 1.05,
-    returns_1yr: 14.2,
-    returns_3yr: 18.8,
-    returns_5yr: 19.2,
+    expenseRatio: 0.65,
+    returns_1yr: -5.2,
+    returns_3yr: 17.8,
+    returns_5yr: 1582,
     minInvestment: 1000,
     riskLevel: "Moderately High",
     fundHouse: "JM Financial Mutual Fund",
     fundManager: "Chaitanya Choksi",
-    fundSize: "₹9,640 Cr"
+    fundSize: "₹5,140 Cr"
   },
   
   // Mid Cap Funds - VERIFIED
@@ -323,70 +323,70 @@ const fundDatabase = [
     name: "Axis Midcap Fund - Direct Plan - Growth",
     category: "Mid Cap",
     expenseRatio: 0.49,
-    returns_1yr: 18.5,
-    returns_3yr: 24.2,
-    returns_5yr: 25.8,
+    returns_1yr: 4.5,
+    returns_3yr: 18.2,
+    returns_5yr: 14.8,
     minInvestment: 100,
     riskLevel: "High",
     fundHouse: "Axis Mutual Fund",
     fundManager: "Shreyash Devalkar",
-    fundSize: "₹24,920 Cr"
+    fundSize: "₹31,920 Cr"
   },
   {
     schemeCode: 119538,  // ✅ VERIFIED
-    name: "Kotak Emerging Equity Fund - Direct Plan - Growth",
+    name: "Kotak midcap Fund - Direct Plan - Growth",
     category: "Mid Cap",
-    expenseRatio: 0.71,
-    returns_1yr: 20.5,
-    returns_3yr: 26.8,
-    returns_5yr: 27.5,
+    expenseRatio: 0.38,
+    returns_1yr: 6.5,
+    returns_3yr: 19.87,
+    returns_5yr: 17.5,
     minInvestment: 1000,
     riskLevel: "High",
     fundHouse: "Kotak Mahindra Mutual Fund",
     fundManager: "Pankaj Tibrewal",
-    fundSize: "₹31,650 Cr"
+    fundSize: "₹61,650 Cr"
   },
   {
     schemeCode: 127042,  // ✅ CORRECTED - Motilal Midcap
     name: "Motilal Oswal Midcap Fund - Direct Plan - Growth",
     category: "Mid Cap",
-    expenseRatio: 0.63,
-    returns_1yr: 21.2,
-    returns_3yr: 27.5,
-    returns_5yr: 28.2,
+    expenseRatio: 0.85,
+    returns_1yr: -9.60,
+    returns_3yr: 20.15,
+    returns_5yr: 21.71,
     minInvestment: 500,
     riskLevel: "High",
     fundHouse: "Motilal Oswal Mutual Fund",
-    fundManager: "Niket Shah",
-    fundSize: "₹12,850 Cr"
+    fundManager: "Varun Sharma",
+    fundSize: "₹33689 Cr"
   },
   {
     schemeCode: 119586,  // ✅ CORRECTED - Invesco Midcap
     name: "Invesco India Mid Cap Fund - Direct Plan - Growth",
     category: "Mid Cap",
-    expenseRatio: 0.85,
-    returns_1yr: 19.8,
-    returns_3yr: 25.4,
-    returns_5yr: 26.1,
+    expenseRatio: 0.55,
+    returns_1yr: 5.19,
+    returns_3yr: 24.62,
+    returns_5yr: 19.60,
     minInvestment: 1000,
     riskLevel: "High",
     fundHouse: "Invesco Mutual Fund",
-    fundManager: "Amit Ganatra",
-    fundSize: "₹9,320 Cr"
+    fundManager: "Aditya Khemani",
+    fundSize: "₹10771 Cr"
   },
   {
     schemeCode: 119600,  // ✅ CORRECTED - HDFC Midcap
-    name: "HDFC Mid-Cap Opportunities Fund - Direct Plan - Growth",
+    name: "HDFC Mid-Cap Fund - Direct Plan - Growth",
     category: "Mid Cap",
     expenseRatio: 0.78,
-    returns_1yr: 19.5,
-    returns_3yr: 25.8,
-    returns_5yr: 26.5,
+    returns_1yr: 6.6,
+    returns_3yr: 23.8,
+    returns_5yr: 20.5,
     minInvestment: 100,
     riskLevel: "High",
     fundHouse: "HDFC Mutual Fund",
     fundManager: "Chirag Setalvad",
-    fundSize: "₹59,180 Cr"
+    fundSize: "₹94,180 Cr"
   },
   
   // Small Cap Funds - VERIFIED
@@ -395,9 +395,9 @@ const fundDatabase = [
     name: "SBI Small Cap Fund - Direct Plan - Growth",
     category: "Small Cap",
     expenseRatio: 0.79,
-    returns_1yr: 22.8,
-    returns_3yr: 32.5,
-    returns_5yr: 34.2,
+    returns_1yr: 9.8,
+    returns_3yr: 19.5,
+    returns_5yr: 24.2,
     minInvestment: 5000,
     riskLevel: "Very High",
     fundHouse: "SBI Mutual Fund",
@@ -408,10 +408,10 @@ const fundDatabase = [
     schemeCode: 118989,  // ✅ VERIFIED
     name: "Nippon India Small Cap Fund - Direct Plan - Growth",
     category: "Small Cap",
-    expenseRatio: 0.79,
-    returns_1yr: 24.2,
-    returns_3yr: 35.8,
-    returns_5yr: 37.5,
+    expenseRatio: 0.67,
+    returns_1yr: 0.7,
+    returns_3yr: 19.8,
+    returns_5yr: 21.5,
     minInvestment: 100,
     riskLevel: "Very High",
     fundHouse: "Nippon India Mutual Fund",
@@ -423,37 +423,37 @@ const fundDatabase = [
     name: "Bandhan Small Cap Fund - Direct Plan - Growth",
     category: "Small Cap",
     expenseRatio: 0.68,
-    returns_1yr: 23.5,
-    returns_3yr: 33.8,
-    returns_5yr: 35.5,
+    returns_1yr: 4.7,
+    returns_3yr: 29.8,
+    returns_5yr: 22.5,
     minInvestment: 100,
     riskLevel: "Very High",
     fundHouse: "Bandhan Mutual Fund",
     fundManager: "Rahul Singh",
-    fundSize: "₹11,250 Cr"
+    fundSize: "₹67,250 Cr"
   },
   {
     schemeCode: 120834,  // ✅ CORRECTED - Axis Small Cap
     name: "Axis Small Cap Fund - Direct Plan - Growth",
     category: "Small Cap",
-    expenseRatio: 0.75,
-    returns_1yr: 25.2,
-    returns_3yr: 36.5,
-    returns_5yr: 38.2,
+    expenseRatio: 0.5,
+    returns_1yr: 1.2,
+    returns_3yr: 16.5,
+    returns_5yr: 17.93,
     minInvestment: 100,
     riskLevel: "Very High",
     fundHouse: "Axis Mutual Fund",
     fundManager: "Anupam Tiwari",
-    fundSize: "₹16,650 Cr"
+    fundSize: "₹26,000 Cr"
   },
   {
     schemeCode: 119598,  // ✅ CORRECTED - HDFC Small Cap
     name: "HDFC Small Cap Fund - Direct Plan - Growth",
     category: "Small Cap",
     expenseRatio: 0.82,
-    returns_1yr: 23.8,
-    returns_3yr: 34.2,
-    returns_5yr: 36.0,
+    returns_1yr: 1.8,
+    returns_3yr: 16.2,
+    returns_5yr: 19.5,
     minInvestment: 100,
     riskLevel: "Very High",
     fundHouse: "HDFC Mutual Fund",
@@ -467,56 +467,56 @@ const fundDatabase = [
     name: "SBI Gold Fund - Direct Plan - Growth",
     category: "Gold Fund",
     expenseRatio: 0.49,
-    returns_1yr: 16.8,
-    returns_3yr: 13.5,
-    returns_5yr: 12.2,
+    returns_1yr: 58.50,
+    returns_3yr: 32.99,
+    returns_5yr: 25.77,
     minInvestment: 1000,
     riskLevel: "Moderate",
     fundHouse: "SBI Mutual Fund",
     fundManager: "Raviprakash Sharma",
-    fundSize: "₹2,100 Cr"
+    fundSize: "₹15,100 Cr"
   },
   {
     schemeCode: 119596,  // ✅ VERIFIED
     name: "HDFC Gold Fund - Direct Plan - Growth",
     category: "Gold Fund",
     expenseRatio: 0.53,
-    returns_1yr: 16.5,
-    returns_3yr: 13.3,
-    returns_5yr: 12.0,
+    returns_1yr: 58.5,
+    returns_3yr: 33.3,
+    returns_5yr: 25.25,
     minInvestment: 100,
     riskLevel: "Moderate",
     fundHouse: "HDFC Mutual Fund",
     fundManager: "Arun Agarwal",
-    fundSize: "₹1,540 Cr"
+    fundSize: "₹11,540 Cr"
   },
   {
     schemeCode: 119227,  // ✅ VERIFIED
     name: "ICICI Prudential Gold ETF FOF - Direct Plan - Growth",
     category: "Gold Fund",
     expenseRatio: 0.25,
-    returns_1yr: 16.6,
-    returns_3yr: 13.4,
-    returns_5yr: 12.1,
+    returns_1yr: 58.16,
+    returns_3yr: 32.96,
+    returns_5yr: 25.5,
     minInvestment: 100,
     riskLevel: "Moderate",
     fundHouse: "ICICI Prudential Mutual Fund",
     fundManager: "Manish Banthia",
-    fundSize: "₹1,825 Cr"
+    fundSize: "₹6,525 Cr"
   },
   {
     schemeCode: 143546,  // ✅ VERIFIED
     name: "Nippon India Gold Savings Fund - Direct Plan - Growth",
     category: "Gold Fund",
     expenseRatio: 0.60,
-    returns_1yr: 16.7,
-    returns_3yr: 13.5,
-    returns_5yr: 12.2,
+    returns_1yr: 56.7,
+    returns_3yr: 32.5,
+    returns_5yr: 25.29,
     minInvestment: 1000,
     riskLevel: "Moderate",
     fundHouse: "Nippon India Mutual Fund",
     fundManager: "Mehul Dama",
-    fundSize: "₹2,680 Cr"
+    fundSize: "₹12,680 Cr"
   }
 ];
 
