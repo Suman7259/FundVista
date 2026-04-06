@@ -2,64 +2,84 @@ import { useState } from 'react'
 import MutualFundsList from './components/MutualFundsList'
 import SIPCalculator from './components/SIPCalculator'
 import LearnMutualFunds from './components/LearnMutualFunds'
+import MarketIndices from './components/MarketIndices'
 
 function App() {
   const [activeTab, setActiveTab] = useState('funds')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-            💰 Mutual Fund Analysis
-          </h1>
-          <p className="text-lg md:text-xl text-white/90">
-            Explore mutual funds and calculate your SIP returns
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      {/* Market Indices Bar - Sticky at top */}
+      <MarketIndices />
 
-        {/* Navigation Tabs */}
-        <div className="flex gap-4 mb-8 justify-center flex-wrap">
-          <button
-            onClick={() => setActiveTab('funds')}
-            className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
-              activeTab === 'funds'
-                ? 'bg-white text-indigo-600 shadow-xl scale-105'
-                : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
-            }`}
-          >
-            📊 Mutual Funds
-          </button>
-          <button
-            onClick={() => setActiveTab('calculator')}
-            className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
-              activeTab === 'calculator'
-                ? 'bg-white text-indigo-600 shadow-xl scale-105'
-                : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
-            }`}
-          >
-            🧮 SIP Calculator
-          </button>
-          <button
-            onClick={() => setActiveTab('learn')}
-            className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
-              activeTab === 'learn'
-                ? 'bg-white text-indigo-600 shadow-xl scale-105'
-                : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
-            }`}
-          >
-            🎓 Learn
-          </button>
+      {/* Header */}
+      <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <h1 className="text-4xl font-bold mb-2">NaviGate</h1>
+          <p className="text-indigo-100">Your Smart Mutual Fund Analysis Platform</p>
         </div>
+      </header>
 
-        {/* Content Section */}
-        <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-10">
-          {activeTab === 'funds' && <MutualFundsList />}
-          {activeTab === 'calculator' && <SIPCalculator />}
-          {activeTab === 'learn' && <LearnMutualFunds />}
+      {/* Navigation Tabs */}
+      <nav className="bg-white shadow-md sticky top-10 z-40">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex gap-1">
+            <button
+              onClick={() => setActiveTab('funds')}
+              className={`px-6 py-4 font-semibold transition-all duration-300 border-b-4 ${
+                activeTab === 'funds'
+                  ? 'border-indigo-600 text-indigo-600 bg-indigo-50'
+                  : 'border-transparent text-gray-600 hover:text-indigo-600 hover:bg-gray-50'
+              }`}
+            >
+              📊 Mutual Funds
+            </button>
+            <button
+              onClick={() => setActiveTab('calculator')}
+              className={`px-6 py-4 font-semibold transition-all duration-300 border-b-4 ${
+                activeTab === 'calculator'
+                  ? 'border-indigo-600 text-indigo-600 bg-indigo-50'
+                  : 'border-transparent text-gray-600 hover:text-indigo-600 hover:bg-gray-50'
+              }`}
+            >
+              🧮 SIP Calculator
+            </button>
+            <button
+              onClick={() => setActiveTab('learn')}
+              className={`px-6 py-4 font-semibold transition-all duration-300 border-b-4 ${
+                activeTab === 'learn'
+                  ? 'border-indigo-600 text-indigo-600 bg-indigo-50'
+                  : 'border-transparent text-gray-600 hover:text-indigo-600 hover:bg-gray-50'
+              }`}
+            >
+              🎓 Learn
+            </button>
+          </div>
         </div>
-      </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {activeTab === 'funds' && <MutualFundsList />}
+        {activeTab === 'calculator' && <SIPCalculator />}
+        {activeTab === 'learn' && <LearnMutualFunds />}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white mt-16">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="text-center">
+            <p className="text-gray-400 text-sm mb-4">
+              ⚠️ <strong>Disclaimer:</strong> Mutual fund investments are subject to market risks. 
+              Read all scheme-related documents carefully before investing. Past performance is not 
+              indicative of future returns. This platform is for informational purposes only.
+            </p>
+            <p className="text-gray-500 text-sm">
+              © 2026 NaviGate - Mutual Fund Analysis Platform | Data from MFapi.in
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
