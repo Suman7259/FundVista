@@ -8,7 +8,82 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
-
+// Add this route for historical NAV data
+app.get('/api/mutual-funds/:schemeCode/history', async (req, res) => {
+  try {
+    const { schemeCode } = req.params
+    const { period } = req.query // period can be '1M', '6M', '1Y', '3Y', '5Y'
+    
+    // Fetch full historical data from MFapi
+    const response = await axios.get(`https://api.mfapi.in/mf/${schemeCode}`, {
+      timeout: 10000
+    })
+    
+    if (response.data && response.data.data) {
+      const allData = response.data.data
+      const fundName = response.data.meta.scheme_name
+      
+      // Filter data based on period
+      let filteredData = []
+      const today = new Date()
+      
+      switch(period) {
+        case '1M':
+          // Last 1 month (30 days)
+          filteredData = allData.slice(0, 30)
+          break
+        case '6M':
+          // Last 6 months (180 days)
+          filteredData = allData.slice(0, 180)
+          break
+        case '1Y':
+          // Last 1 year (365 days)
+          filteredData = allData.slice(0, 365)
+          break
+        case '3Y':
+          // Last 3 years (1095 days)
+          filteredData = allData.slice(0, 1095)
+          break
+        case '5Y':
+          // Last 5 years (1825 days)
+          filteredData = allData.slice(0, 1825)
+          break
+        default:
+          // Default to 1 year
+          filteredData = allData.slice(0, 365)
+      }
+      
+      // Reverse to get chronological order (oldest to newest)
+      filteredData = filteredData.reverse()
+      
+      // Format data for chart
+      const chartData = filteredData.map(item => ({
+        date: item.date,
+        nav: parseFloat(item.nav)
+      }))
+      
+      res.json({
+        success: true,
+        fundName: fundName,
+        period: period,
+        data: chartData
+      })
+      
+    } else {
+      res.status(404).json({ 
+        success: false, 
+        error: 'No historical data found' 
+      })
+    }
+    
+  } catch (error) {
+    console.error('Error fetching historical data:', error.message)
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to fetch historical data' 
+    })
+  }
+})
 // Market Indices Route - Add this with your other routes
 app.get('/api/market-indices', async (req, res) => {
   try {

@@ -4,18 +4,43 @@ import axios from 'axios'
 const MarketIndices = () => {
   const [indices, setIndices] = useState([])
   const [loading, setLoading] = useState(true)
-  const [marketOpen, setMarketOpen] = useState(true) // Hardcoded as requested
+  const [marketOpen, setMarketOpen] = useState(false)
 
   useEffect(() => {
+    checkMarketStatus()
     fetchIndices()
+    
     // Refresh every 5 minutes
-    const interval = setInterval(fetchIndices, 300000)
+    const interval = setInterval(() => {
+      checkMarketStatus()
+      fetchIndices()
+    }, 300000)
+    
     return () => clearInterval(interval)
   }, [])
 
+  const checkMarketStatus = () => {
+    const now = new Date()
+    const day = now.getDay() // 0 = Sunday, 6 = Saturday
+    const hours = now.getHours()
+    const minutes = now.getMinutes()
+    const currentTime = hours * 60 + minutes // Convert to minutes since midnight
+
+    // Market timings: Monday-Friday, 9:15 AM - 3:30 PM IST
+    const marketOpenTime = 9 * 60 + 15  // 9:15 AM = 555 minutes
+    const marketCloseTime = 15 * 60 + 30 // 3:30 PM = 930 minutes
+
+    // Check if it's a weekday (Monday = 1 to Friday = 5)
+    const isWeekday = day >= 1 && day <= 5
+    
+    // Check if current time is within market hours
+    const isDuringMarketHours = currentTime >= marketOpenTime && currentTime <= marketCloseTime
+
+    setMarketOpen(isWeekday && isDuringMarketHours)
+  }
+
   const fetchIndices = async () => {
     try {
-      // Option 1: Try Yahoo Finance through your backend (recommended)
       const response = await axios.get('http://localhost:5000/api/market-indices')
       
       if (response.data && response.data.length > 0) {
@@ -27,7 +52,6 @@ const MarketIndices = () => {
       setLoading(false)
     } catch (error) {
       console.error("Error fetching indices:", error)
-      // Fallback to mock data
       setIndices(getMockData())
       setLoading(false)
     }
@@ -87,7 +111,7 @@ const MarketIndices = () => {
     <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-2 shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between overflow-x-auto scrollbar-hide">
-          {/* Market Status - Hardcoded */}
+          {/* Market Status - Dynamic based on time */}
           <div className="flex items-center gap-2 mr-6 flex-shrink-0">
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 ${marketOpen ? 'bg-green-500' : 'bg-red-500'} rounded-full animate-pulse`}></div>
