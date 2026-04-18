@@ -1,13 +1,173 @@
-const express = require('express');
-const cors = require('cors');
-const axios = require('axios');
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import axios from 'axios';
+// At the top of server.js, after imports
+import { GoogleGenAI } from '@google/genai';
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+
 
 app.use(cors());
 app.use(express.json());
 
+// Initialize Gemini AI with correct syntax for @google/genai
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// Add this route to your backend/server.js
+
+// AI Fund Recommendation Route - Using Gemini 2.5 Flash
+// AI Fund Recommendation Route - Using Gemini 2.5 Flash
+// AI Fund Recommendation Route - Using @google/genai package
+// Import at the top of the file (add this if not already there)
+
+
+// AI Fund Recommendation Route - Using @google/genai with Gemini 2.5 Flash
+app.post('/api/ai-fund-recommendations', async (req, res) => {
+  try {
+    const { profile } = req.body;
+    
+    console.log('Received profile:', profile);
+    
+    const prompt = `You are an expert SEBI-registered financial advisor specializing in Indian mutual funds. Analyze this investor's profile and provide personalized mutual fund recommendations.
+
+INVESTOR PROFILE:
+- Age: ${profile.age} years
+- Monthly Income: ₹${profile.monthlyIncome}
+- Investment Amount: ₹${profile.investmentAmount}
+- Investment Horizon: ${profile.investmentHorizon}
+- Risk Tolerance: ${profile.riskTolerance}
+- Primary Goal: ${profile.investmentGoal}
+- Existing Investments: ${profile.existingInvestments}
+- Expected Returns: ${profile.expectedReturns}
+
+INSTRUCTIONS:
+1. Provide a personalized 2-3 sentence analysis explaining why these funds suit this investor
+2. Recommend 3-5 REAL Indian mutual funds from top AMCs (HDFC, ICICI, SBI, Axis, Parag Parikh, Kotak, Mirae Asset, UTI, Nippon)
+3. Ensure allocations total EXACTLY 100%
+4. Match funds to investor's risk tolerance and goals
+5. Include both "Direct Plan" and "Growth" in fund names
+
+RISK MATCHING GUIDELINES:
+- Conservative: 60% Large Cap, 20% Index, 10% Debt, 10% Gold
+- Moderate: 40% Large Cap, 30% Flexi Cap, 20% Mid Cap, 10% Gold
+- Aggressive: 30% Large Cap, 30% Flexi Cap, 30% Mid Cap, 10% Small Cap
+- Very Aggressive: 20% Large Cap, 30% Mid Cap, 30% Small Cap, 20% Flexi Cap
+
+RESPOND IN THIS EXACT JSON FORMAT (NO MARKDOWN, NO CODE BLOCKS):
+{
+  "analysis": "Personalized 2-3 sentence analysis of why these funds match the investor's profile, risk tolerance, and goals",
+  "funds": [
+    {
+      "name": "Exact fund name - Direct Plan - Growth",
+      "category": "Large Cap/Mid Cap/Small Cap/Index Fund/Flexi Cap/Gold Fund",
+      "fundHouse": "Actual fund house name",
+      "allocation": 30,
+      "reason": "Specific reason why this fund suits THIS investor's profile and goals",
+      "returns3Y": "18.5%",
+      "risk": "Moderate/High/Very High",
+      "expenseRatio": "0.85"
+    }
+  ]
+}`;
+
+    console.log('Calling Gemini 2.5 Flash with @google/genai package...');
+    
+    // Initialize the Google Generative AI client
+const result = await ai.models.generateContent({
+  model: 'gemini-2.5-flash',
+  contents: prompt,
+  config: { 
+    maxOutputTokens: 4000
+  }
+});
+
+let text = result.text || '';
+// Check if response is complete
+if (!text.includes('}')) {
+  console.warn('Response appears truncated, retrying with higher token limit...');
+  const retryResult = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: prompt,
+    config: { 
+      maxOutputTokens: 8000
+    }
+  });
+  text = retryResult.text || '';
+}
+    console.log('Raw AI Response:', text);
+    
+    if (!text) {
+      throw new Error('No text generated from AI');
+    }
+    
+    // Clean up markdown formatting
+    text = text.trim()
+      .replace(/```json\n?/g, '')
+      .replace(/```\n?/g, '')
+      .trim();
+    
+    // Parse JSON
+    const aiResponse = JSON.parse(text);
+    
+    // Validate structure
+    if (!aiResponse.analysis || !aiResponse.funds || !Array.isArray(aiResponse.funds)) {
+      throw new Error('Invalid AI response structure');
+    }
+    
+    // Validate and normalize allocations to 100%
+    const totalAllocation = aiResponse.funds.reduce((sum, fund) => sum + fund.allocation, 0);
+    if (Math.abs(totalAllocation - 100) > 1) {
+      console.warn(`Allocations sum to ${totalAllocation}, normalizing to 100%`);
+      const factor = 100 / totalAllocation;
+      aiResponse.funds = aiResponse.funds.map(fund => ({
+        ...fund,
+        allocation: Math.round(fund.allocation * factor)
+      }));
+      
+      // Ensure it sums to exactly 100 after rounding
+      const newTotal = aiResponse.funds.reduce((sum, fund) => sum + fund.allocation, 0);
+      if (newTotal !== 100) {
+        aiResponse.funds[0].allocation += (100 - newTotal);
+      }
+    }
+    
+    console.log('Processed AI Response:', aiResponse);
+    res.json(aiResponse);
+    
+  } catch (error) {
+    console.error('AI Recommendation Error:', error);
+    console.error('Error details:', error.message);
+    
+    // Handle specific errors
+    if (error.message && error.message.includes('API key')) {
+      return res.status(401).json({ 
+        error: '⚠️ Invalid API key',
+        message: 'Please check your Gemini API key in .env file'
+      });
+    }
+    
+    if (error.message && error.message.includes('quota')) {
+      return res.status(429).json({ 
+        error: '⚠️ API quota exceeded',
+        message: 'Please wait a moment and try again'
+      });
+    }
+    
+    if (error.status === 503) {
+      return res.status(503).json({ 
+        error: '⚠️ Gemini service is busy. Please try again later.'
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Failed to generate AI recommendations',
+      message: error.message,
+      details: 'Check if Gemini API key is valid and supports Gemini 2.5 Flash'
+    });
+  }
+});
 // Add this route for historical NAV data
 app.get('/api/mutual-funds/:schemeCode/history', async (req, res) => {
   try {

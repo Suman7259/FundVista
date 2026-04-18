@@ -1,12 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { InvestmentModeContext } from '../App'
 
 const FundDetailModal = ({ fund, onClose }) => {
   const [historicalData, setHistoricalData] = useState([])
   const [selectedPeriod, setSelectedPeriod] = useState('1Y')
   const [loading, setLoading] = useState(true)
   const [showRecommendation, setShowRecommendation] = useState(false)
+  
+  // Get investment mode from context
+  const { investmentMode } = useContext(InvestmentModeContext)
 
   useEffect(() => {
     if (fund) {
@@ -32,6 +36,106 @@ const FundDetailModal = ({ fund, onClose }) => {
       setHistoricalData([])
     } finally {
       setLoading(false)
+    }
+  }
+
+  // Virtual investment handler
+  const handleVirtualInvestment = (type, amount) => {
+    // Get current portfolio
+    const portfolio = JSON.parse(localStorage.getItem('virtualPortfolio') || '[]')
+    const balance = parseFloat(localStorage.getItem('virtualBalance') || '100000')
+    const totalInvested = parseFloat(localStorage.getItem('totalInvested') || '0')
+
+    // Check if enough balance
+    if (balance < amount) {
+      alert(`❌ Insufficient Virtual Balance!\n\nRequired: ₹${amount.toLocaleString()}\nAvailable: ₹${balance.toLocaleString()}\n\n💡 Tip: Go to "My Portfolio" tab and click "Reset Portfolio" to get ₹1,00,000 again.`)
+      return
+    }
+
+    // Create investment entry
+    const investment = {
+      fundName: fund.name,
+      category: fund.category,
+      amount: amount,
+      date: new Date().toISOString(),
+      type: type,
+      buyNAV: fund.nav,
+      currentNAV: fund.nav,
+      units: parseFloat((amount / fund.nav).toFixed(4))
+    }
+
+    // Update portfolio
+    portfolio.push(investment)
+    localStorage.setItem('virtualPortfolio', JSON.stringify(portfolio))
+    localStorage.setItem('virtualBalance', (balance - amount).toString())
+    localStorage.setItem('totalInvested', (totalInvested + amount).toString())
+
+    alert(
+      `✅ Virtual ${type} Successful!\n\n` +
+      `Fund: ${fund.name}\n` +
+      `Amount: ₹${amount.toLocaleString()}\n` +
+      `Units Allotted: ${investment.units}\n` +
+      `NAV: ₹${fund.nav.toFixed(2)}\n\n` +
+      `💼 Check "My Portfolio" tab to see your investment!`
+    )
+    onClose()
+  }
+
+  // Real investment handler
+  const handleRealInvestment = (fundName) => {
+    const confirmed = confirm(
+      `🔗 Real Investment Mode\n\n` +
+      `You are about to invest in:\n${fundName}\n\n` +
+      `You will be redirected to Groww (trusted platform).\n\n` +
+      `Continue?`
+    )
+    
+    if (confirmed) {
+      // Redirect to Groww
+      window.open('https://groww.in/mutual-funds', '_blank')
+      alert(`💡 Search Tip:\n\nSearch for "${fundName.split('-')[0].trim()}" on Groww to find this fund quickly!`)
+    }
+  }
+
+  const handleStartSIP = () => {
+    if (investmentMode === 'virtual') {
+      // Virtual SIP
+      const sipAmount = parseInt(prompt(
+        `🎮 Virtual SIP Investment\n\n` +
+        `Enter monthly SIP amount:\n` +
+        `Minimum: ₹${fund.minInvestment}`,
+        fund.minInvestment
+      ))
+      
+      if (sipAmount && sipAmount >= fund.minInvestment) {
+        handleVirtualInvestment('SIP', sipAmount)
+      } else if (sipAmount) {
+        alert(`❌ Minimum SIP amount is ₹${fund.minInvestment}`)
+      }
+    } else {
+      // Real investment
+      handleRealInvestment(fund.name)
+    }
+  }
+
+  const handleInvestLumpsum = () => {
+    if (investmentMode === 'virtual') {
+      // Virtual Lumpsum
+      const lumpsumAmount = parseInt(prompt(
+        `🎮 Virtual Lumpsum Investment\n\n` +
+        `Enter lumpsum amount:\n` +
+        `Minimum: ₹${fund.minInvestment}`,
+        fund.minInvestment * 10
+      ))
+      
+      if (lumpsumAmount && lumpsumAmount >= fund.minInvestment) {
+        handleVirtualInvestment('Lumpsum', lumpsumAmount)
+      } else if (lumpsumAmount) {
+        alert(`❌ Minimum investment is ₹${fund.minInvestment}`)
+      }
+    } else {
+      // Real investment
+      handleRealInvestment(fund.name)
     }
   }
 
@@ -102,14 +206,6 @@ const FundDetailModal = ({ fund, onClose }) => {
 
   const recommendation = getInvestmentRecommendation()
 
-  const handleStartSIP = () => {
-    alert(`Starting SIP for ${fund.name}\n\nMinimum SIP: ₹${fund.minInvestment}\n\nThis will redirect to your broker/AMC platform.`)
-  }
-
-  const handleInvestLumpsum = () => {
-    alert(`Investing Lumpsum in ${fund.name}\n\nMinimum Investment: ₹${fund.minInvestment}\n\nThis will redirect to your broker/AMC platform.`)
-  }
-
   const periods = [
     { label: '1M', value: '1M' },
     { label: '6M', value: '6M' },
@@ -159,6 +255,16 @@ const FundDetailModal = ({ fund, onClose }) => {
                   {fund.category}
                 </span>
                 <span className="text-sm">{fund.fundHouse}</span>
+              </div>
+              {/* Investment Mode Indicator */}
+              <div className="mt-2">
+                <span className={`text-xs px-3 py-1 rounded-full ${
+                  investmentMode === 'virtual' 
+                    ? 'bg-indigo-200 text-indigo-900' 
+                    : 'bg-green-200 text-green-900'
+                }`}>
+                  {investmentMode === 'virtual' ? '🎮 Virtual Mode' : '💰 Real Investment Mode'}
+                </span>
               </div>
             </div>
             <button
