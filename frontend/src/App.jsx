@@ -22,7 +22,7 @@ function App() {
         {/* Header */}
         <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
           <div className="max-w-7xl mx-auto px-4 py-6">
-            <h1 className="text-4xl font-bold mb-2">NaviGate</h1>
+            <h1 className="text-4xl font-bold mb-2">FundVista</h1>
             <p className="text-indigo-100">Your Smart Mutual Fund Analysis Platform</p>
           </div>
         </header>
@@ -146,7 +146,7 @@ function App() {
                 indicative of future returns. This platform is for informational purposes only.
               </p>
               <p className="text-gray-500 text-sm">
-                © 2026 NaviGate - Mutual Fund Analysis Platform | Data from MFapi.in | AI Powered by Gemini 2.5 Flash
+                © 2026 FundVista - Mutual Fund Analysis Platform | Data from MFapi.in | AI Powered by Gemini 2.5 Flash
               </p>
             </div>
           </div>
