@@ -5,6 +5,27 @@ const LearnMutualFunds = () => {
   const [showVideo, setShowVideo] = useState(false)
   const [currentVideo, setCurrentVideo] = useState(null)
 
+  // FIX: This function ensures any YouTube link is converted to the valid embed format
+  const formatEmbedUrl = (url) => {
+    if (!url) return '';
+    let videoId = '';
+    
+    // Handle youtu.be share links
+    if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1].split('?')[0];
+    } 
+    // Handle standard watch?v= links
+    else if (url.includes('watch?v=')) {
+      videoId = url.split('watch?v=')[1].split('&')[0];
+    }
+    // Handle existing embed links
+    else if (url.includes('embed/')) {
+      return url;
+    }
+
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
   const educationalContent = {
     basics: {
       title: "📚 Mutual Funds Basics",
@@ -12,21 +33,22 @@ const LearnMutualFunds = () => {
       videos: [
         {
           title: "What are Mutual Funds? Complete Guide",
-          url: "https://www.youtube.com/embed/gE25bu94miU",
+          // This was a share link - the formatter will now handle this
+          url: "https://youtu.be/ACpQo1a_RBk?si=kKeiXHnYrcLSojew",
           duration: "15:30",
-          channel: "Zerodha Varsity"
+          channel: "Ankur Warikoo"
         },
         {
           title: "How Mutual Funds Work - Explained Simply",
-          url: "https://www.youtube.com/embed/pKAKfq75u5M",
+          url: "https://youtu.be/OuYvU5m2rhQ?si=_u7lx4jfRq6E9COJ",
           duration: "12:45",
-          channel: "ET Money"
+          channel: "Zerodha Varsity"
         },
         {
           title: "Understanding NAV in Mutual Funds",
-          url: "https://www.youtube.com/embed/vNHP0yPbJbI",
+          url: "https://youtu.be/UD2s3RRvW3A?si=UKHrQf1TxxosTt9B",
           duration: "8:20",
-          channel: "Asset Yogi"
+          channel: "Zerodha Varsity"
         }
       ],
       topics: [
@@ -54,13 +76,13 @@ const LearnMutualFunds = () => {
       videos: [
         {
           title: "Types of Mutual Funds Explained",
-          url: "https://www.youtube.com/embed/B1AJLfGxKu4",
+          url: "https://youtu.be/ryT8f9wl4DY?si=5n9AbJoyReyN0yYO",
           duration: "18:45",
-          channel: "CA Rachana Ranade"
+          channel: "Sanjay Kathuria"
         },
         {
           title: "Large Cap vs Mid Cap vs Small Cap",
-          url: "https://www.youtube.com/embed/1VNvH7Zx6KA",
+          url: "https://youtu.be/pmmAPaDyENw?si=YlxrlWmvBd_eQIU3",
           duration: "14:20",
           channel: "Labour Law Advisor"
         },
@@ -122,19 +144,19 @@ const LearnMutualFunds = () => {
       videos: [
         {
           title: "SIP Explained - Complete Guide for Beginners",
-          url: "https://www.youtube.com/embed/Wx05RJcgN4g",
+          url: "https://youtu.be/1DRq8N7SpYc?si=k7PTFfrWxLeiFyLI",
           duration: "20:15",
           channel: "Groww"
         },
         {
           title: "Power of Compounding in SIP",
-          url: "https://www.youtube.com/embed/tJO3Y8fKy5I",
+          url: "https://youtu.be/cosjtcWyWlI?si=a6OmGMVEDH0mSwHX",
           duration: "11:30",
           channel: "Shashank Udupa"
         },
         {
           title: "SIP vs Lumpsum - Which is Better?",
-          url: "https://www.youtube.com/embed/xQTvPMHJ-K4",
+          url: "https://youtu.be/1DRq8N7SpYc?si=YM7QIPDUdwLN8EXv",
           duration: "13:45",
           channel: "ETMONEY"
         }
@@ -168,19 +190,19 @@ const LearnMutualFunds = () => {
       videos: [
         {
           title: "Understanding Mutual Fund Returns",
-          url: "https://www.youtube.com/embed/bCPu3_7V8YM",
+          url: "https://youtu.be/8A3s9WP_7l4?si=a21d74B3TOWJskaZ",
           duration: "15:20",
           channel: "Finance Boosan"
         },
         {
           title: "What is Expense Ratio?",
-          url: "https://www.youtube.com/embed/Oi_YZNcQDmA",
+          url: "https://youtu.be/FaisQZ3bRPY?si=r2XoahPALKEjsB9A",
           duration: "9:45",
           channel: "Akshat Shrivastava"
         },
         {
           title: "Risk Management in Mutual Funds",
-          url: "https://www.youtube.com/embed/5I_jKaXHjhM",
+          url: "https://youtu.be/7ctmsSRGGsk?si=KYZiKnMVrJ3bWPYm",
           duration: "17:30",
           channel: "Shankar Nath"
         }
@@ -214,19 +236,19 @@ const LearnMutualFunds = () => {
       videos: [
         {
           title: "Asset Allocation Strategy",
-          url: "https://www.youtube.com/embed/VRGEjpEMdxE",
+          url: "https://youtu.be/LTe0xl8LZuA?si=U440YWt2xZF8cwQJ",
           duration: "19:30",
           channel: "Yadnya Investment Academy"
         },
         {
           title: "When to Buy and Sell Mutual Funds",
-          url: "https://www.youtube.com/embed/qJjKz7g3gfU",
+          url: "https://youtu.be/aBvcg66gENc?si=SKiKbnrDzGIa0DpL",
           duration: "14:15",
           channel: "Ankur Warikoo"
         },
         {
           title: "Portfolio Diversification Guide",
-          url: "https://www.youtube.com/embed/eikbQPldhPY",
+          url: "https://youtu.be/iOCbdCHtP4M?si=SC6IyUDRKuOiQD_d",
           duration: "16:40",
           channel: "CA Rachana Ranade"
         }
@@ -260,19 +282,19 @@ const LearnMutualFunds = () => {
       videos: [
         {
           title: "Mutual Fund Taxation Explained (2024 Update)",
-          url: "https://www.youtube.com/embed/pN5bXqU_mDI",
+          url: "https://youtu.be/zxSwhkoQvO8?si=fq0os69sP3XRuE2R",
           duration: "21:45",
           channel: "Labour Law Advisor"
         },
         {
           title: "ELSS Tax Saving Mutual Funds",
-          url: "https://www.youtube.com/embed/FjgZz6T0OOI",
+          url: "https://youtu.be/rmZcZiPUuYI?si=maT732bog9SsXFkz",
           duration: "13:20",
           channel: "Groww"
         },
         {
           title: "Direct vs Regular Mutual Funds",
-          url: "https://www.youtube.com/embed/xQYOGJr4hN0",
+          url: "https://youtu.be/5uaWzV55v0Y?si=CwYz6Rcx9qmAF_WX",
           duration: "10:30",
           channel: "Zerodha"
         }
@@ -407,7 +429,6 @@ const LearnMutualFunds = () => {
                 {topic.answer}
               </p>
 
-              {/* Additional Info for Fund Types */}
               {topic.risk && (
                 <div className="grid md:grid-cols-3 gap-4 mt-4">
                   <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
@@ -481,7 +502,8 @@ const LearnMutualFunds = () => {
             <div className="relative" style={{ paddingBottom: '56.25%' }}>
               <iframe
                 className="absolute top-0 left-0 w-full h-full"
-                src={currentVideo.url}
+                // MODIFIED: We pass the URL through the format function here
+                src={formatEmbedUrl(currentVideo.url)}
                 title={currentVideo.title}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

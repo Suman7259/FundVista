@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.16.2",
     "axios": "^1.6.0",
+    "html2pdf.js": "^0.14.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recharts": "^3.7.0"

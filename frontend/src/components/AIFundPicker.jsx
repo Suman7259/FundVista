@@ -1,11 +1,16 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react' // Added useRef
 import axios from 'axios'
+// Import html2pdf.js (Ensure you run: npm install html2pdf.js)
+import html2pdf from 'html2pdf.js'
 
 const AIFundPicker = () => {
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [recommendations, setRecommendations] = useState(null)
   
+  // Create a reference for the PDF content
+  const reportRef = useRef();
+
   // User inputs
   const [userProfile, setUserProfile] = useState({
     age: '',
@@ -21,6 +26,21 @@ const AIFundPicker = () => {
   const handleInputChange = (field, value) => {
     setUserProfile({ ...userProfile, [field]: value })
   }
+
+  // --- PDF DOWNLOAD LOGIC ---
+  const handleDownloadPDF = () => {
+    const element = reportRef.current;
+    const opt = {
+      margin:       [10, 10],
+      filename:     `AI_Portfolio_${userProfile.age}_${userProfile.investmentGoal}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
+  // ---------------------------
 
   const generateRecommendations = async () => {
     setLoading(true)
@@ -326,7 +346,7 @@ const AIFundPicker = () => {
 
       {/* Step 3: AI Recommendations */}
       {step === 3 && recommendations && (
-        <div className="space-y-6">
+        <div className="space-y-6" ref={reportRef}> {/* Added ref here */}
           {/* Summary Card */}
           <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-xl p-8 text-white">
             <div className="flex items-start justify-between">
@@ -338,6 +358,7 @@ const AIFundPicker = () => {
               </div>
               <button
                 onClick={resetPicker}
+                data-html2canvas-ignore="true" // Hides button from PDF
                 className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg font-semibold transition-all"
               >
                 Start Over
@@ -475,7 +496,7 @@ const AIFundPicker = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4">
+          <div className="flex gap-4" data-html2canvas-ignore="true"> {/* Hidden from PDF */}
             <button
               onClick={resetPicker}
               className="flex-1 bg-gray-200 text-gray-700 px-6 py-4 rounded-xl font-semibold hover:bg-gray-300 transition-all"
@@ -483,6 +504,7 @@ const AIFundPicker = () => {
               Try Different Profile
             </button>
             <button
+              onClick={handleDownloadPDF} // Trigger PDF Function
               className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
